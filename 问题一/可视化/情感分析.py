@@ -12,7 +12,7 @@ def sentiment(text):
 	    # 实例化一个认证对象，入参需要传入腾讯云账户secretId，secretKey,此处还需注意密钥对的保密
 	    # 密钥可前往https://console.cloud.tencent.com/cam/capi网站进行获取
 
-	    cred = credential.Credential("AKIDRhkY7WhdLsBG6lGZdUGpALL9qLchZGkB", "GH5g3A1f8ORGtJUQK1Vs44rPingMo47v")
+	    cred = credential.Credential("", "")
 	    # 实例化一个http选项，可选的，没有特殊需求可以跳过
 	    httpProfile = HttpProfile()
 	    httpProfile.endpoint = "nlp.tencentcloudapi.com"
