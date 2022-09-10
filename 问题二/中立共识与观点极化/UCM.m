@@ -1,16 +1,16 @@
 
-%ĞèÒªÉèÖÃµÄ²ÎÊı
-N = 2000;   %×Ü½Úµã¸öÊı
-x = rand(1,N);%³õÊ¼¹Ûµã
-e = 0.25;%ĞÅÈÎãĞÖµ£¬·¶Î§[0,0.5]
-u = 0.15;%¹ÛµãµÄÏà»¥×÷ÓÃÏµÊı£¬·¶Î§£¨0£¬0.5£©
-step = 2*10^6;%²½Êı
+%éœ€è¦è®¾ç½®çš„å‚æ•°
+N = 2000;   %æ€»èŠ‚ç‚¹ä¸ªæ•°
+x = rand(1,N);%åˆå§‹è§‚ç‚¹
+e = 0.4;%ä¿¡ä»»é˜ˆå€¼ï¼ŒèŒƒå›´[0,0.5]
+u = 0.45;%è§‚ç‚¹çš„ç›¸äº’ä½œç”¨ç³»æ•°ï¼ŒèŒƒå›´ï¼ˆ0ï¼Œ0.5ï¼‰
+step = 3*10^6;%æ­¥æ•°
 
-%½¨Á¢ÎŞ±ê¶ÈÍøÂç
-m = 5;%Ã¿´Î¼ÓÈëµÄÁ¬ÏßÊı
-m0 = 20;    %³õÊ¼µÄ½Úµã¸öÊı
-A = zeros(N,N);%ÁÚ½Ó¾ØÕó
-%·Àbug
+%å»ºç«‹æ— æ ‡åº¦ç½‘ç»œ
+m = 5;%æ¯æ¬¡åŠ å…¥çš„è¿çº¿æ•°
+m0 = 20;    %åˆå§‹çš„èŠ‚ç‚¹ä¸ªæ•°
+A = zeros(N,N);%é‚»æ¥çŸ©é˜µ
+%é˜²bug
 for i=1:m0
     for j= (i+1):m0
         A(i,j)= 1;  
@@ -19,26 +19,26 @@ for i=1:m0
 end   
 DegreeInterval = zeros(1,N);
 for new = m0+1:N
-    %old vertice ¶ÈÔ½´óÁ¬½ÓÉÏµÄ¸ÅÂÊÔ½´ó
-    Degree = sum(A(1:new-1,1:new-1));  %Ã¿¸ö¶¥µãµÄ¶È
-    %ÖÆÔì³öÒ»¸ö¶ÈµÄ·Ö²¼Çø¼ä£¬Ä£Äâ¸ÅÂÊ
+    %old vertice åº¦è¶Šå¤§è¿æ¥ä¸Šçš„æ¦‚ç‡è¶Šå¤§
+    Degree = sum(A(1:new-1,1:new-1));  %æ¯ä¸ªé¡¶ç‚¹çš„åº¦
+    %åˆ¶é€ å‡ºä¸€ä¸ªåº¦çš„åˆ†å¸ƒåŒºé—´ï¼Œæ¨¡æ‹Ÿæ¦‚ç‡
     DegreeInterval(1) = Degree(1);
     for i=2:new-1
         DegreeInterval(i) = Degree(i)+DegreeInterval(i-1);
     end 
-    %Á¬½Ó ĞÂ½Úµã Óë m¸öold½Úµã
-    AllDegree = sum(sum(A(1:new-1,1:new-1))); %Õû¸öÍ¼µÄ×Ü¶È
+    %è¿æ¥ æ–°èŠ‚ç‚¹ ä¸ mä¸ªoldèŠ‚ç‚¹
+    AllDegree = sum(sum(A(1:new-1,1:new-1))); %æ•´ä¸ªå›¾çš„æ€»åº¦
     for i = 1:m 
         while 1
-         %ÒÔ¸ÅÂÊ´Óold½ÚµãÖĞÕÒµ½ºÏÊÊµÄ¶¥µãÁ¬½Ó
-         RandDegree  = fix(AllDegree*rand()+1); %ÒªÓë¶ÈÇø¼ä°üº¬RandDegreeµÄ¶¥µãÏàÁ¬
-         %ÕÒµ½ ·ûºÏ ÒªÇóµÄÇø¼äËùÊô¶¥µã
+         %ä»¥æ¦‚ç‡ä»oldèŠ‚ç‚¹ä¸­æ‰¾åˆ°åˆé€‚çš„é¡¶ç‚¹è¿æ¥
+         RandDegree  = fix(AllDegree*rand()+1); %è¦ä¸åº¦åŒºé—´åŒ…å«RandDegreeçš„é¡¶ç‚¹ç›¸è¿
+         %æ‰¾åˆ° ç¬¦åˆ è¦æ±‚çš„åŒºé—´æ‰€å±é¡¶ç‚¹
          Ans = find(RandDegree <= DegreeInterval(1:new-1));
          old = Ans(1);
          if A(new,old) == 0
             A(new,old) = 1;
             A(old,new) = 1;
-            break;         %³É¹¦Á¬½Ó
+            break;         %æˆåŠŸè¿æ¥
          end
         end
     end
@@ -78,7 +78,7 @@ for t = 1:step
                 op_j = x(j);
                 x(i) = x(i) - u*(op_j - op_i - pi);
                 x(j) = x(j) - u*(op_i - op_j - pj);
-                %xiºÍxjÓĞ¿ÉÄÜ³¬³ö·¶Î§
+                %xiå’Œxjæœ‰å¯èƒ½è¶…å‡ºèŒƒå›´
                 if x(i)<0
                     x(i) = abs(x(i)+1);
                 end
@@ -94,17 +94,17 @@ for t = 1:step
             end
         end
 end
-%ÀÛ»ı·Ö²¼Í¼
+%ç´¯ç§¯åˆ†å¸ƒå›¾
 xmin=0;
 xmax=1;
-op_UCM = linspace(xmin,xmax,20);%½«×î´ó×îĞ¡Çø¼ä·Ö³É50¸öµÈ·Öµã(49µÈ·Ö),È»ºó·Ö±ğ¼ÆËã¸÷¸öÇø¼äµÄ¸öÊı
-yy_UCM=hist(x,op_UCM);%¼ÆËã¸÷¸öÇø¼äµÄ¸öÊı
-yy_UCM=yy_UCM/length(x);%¼ÆËã¸÷¸öÇø¼äµÄ¸öÊı
-bar(op_UCM,yy_UCM,'w');%»­³ö¸ÅÂÊÃÜ¶È·Ö²¼Í¼
+op_UCM = linspace(xmin,xmax,20);%å°†æœ€å¤§æœ€å°åŒºé—´åˆ†æˆ50ä¸ªç­‰åˆ†ç‚¹(49ç­‰åˆ†),ç„¶ååˆ†åˆ«è®¡ç®—å„ä¸ªåŒºé—´çš„ä¸ªæ•°
+yy_UCM=hist(x,op_UCM);%è®¡ç®—å„ä¸ªåŒºé—´çš„ä¸ªæ•°
+yy_UCM=yy_UCM/length(x);%è®¡ç®—å„ä¸ªåŒºé—´çš„ä¸ªæ•°
+bar(op_UCM,yy_UCM,'w');%ç”»å‡ºæ¦‚ç‡å¯†åº¦åˆ†å¸ƒå›¾
 hold on;
 plot (op_UCM,yy_UCM,'s-','LineWidth',2);
 xlim([0 1]);
 xlabel('x','FontSize',20);
 ylabel('PDF','FontSize',20);
 set(gca,'linewidth',1,'fontsize',16,'fontname','Times');
-ggplotAxes2D([],'AxesTheme','gray','LegendStyle','ggplot','ColorOrder','Set2');
+%ggplotAxes2D([],'AxesTheme','gray','LegendStyle','ggplot','ColorOrder','Set2');
